@@ -3,7 +3,6 @@
 #include <random>
 #include <algorithm>
 #include <iostream>
-#include <fstream>
 
 #include "BTree.h"
 
@@ -21,27 +20,27 @@ int main()
                 for( size_t j = 0; j < maxIteration; ++j )
                 {
                     size_t size = countData;
-                    // Генерируем тестовые данные
+                    // Р“РµРЅРµСЂРёСЂСѓРµРј С‚РµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ
                     std::vector< int > testData( size );
                     std::iota( testData.begin(), testData.end(), 1 );
                     std::mt19937 mt( j + countData * maxIteration );
                     std::shuffle( testData.begin(), testData.end(), mt );
 
                     BTree<int> tree( sizeNode );
-                    // Вставляем все тестовые данные
+                    // Р’СЃС‚Р°РІР»СЏРµРј РІСЃРµ С‚РµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ
                     for( size_t i = 0; i < testData.size(); ++i )
                     {
                         tree.insert( testData[i] );
                     }
 
-                    // Проверяем, что все вставили
+                    // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РІСЃРµ РІСЃС‚Р°РІРёР»Рё
                     for( size_t i = 0; i < testData.size(); ++i )
                     {
                         if( !tree.contains( testData[i] ) )
                             throw std::runtime_error( "fail insert" );
                     }
 
-                    // Удаляем и сразу проверям, что удалили
+                    // РЈРґР°Р»СЏРµРј Рё СЃСЂР°Р·Сѓ РїСЂРѕРІРµСЂСЏРј, С‡С‚Рѕ СѓРґР°Р»РёР»Рё
                     for( size_t i = 0; i < testData.size(); ++i )
                     {
                         if( !tree.remove( testData[i] ) )
@@ -49,7 +48,7 @@ int main()
                         if( tree.contains( testData[i] ) )
                             throw std::runtime_error( "fail deleting" );
                     }
-                    // Пытаемся удалить повторно, должно вернуть false
+                    // РџС‹С‚Р°РµРјСЃСЏ СѓРґР°Р»РёС‚СЊ РїРѕРІС‚РѕСЂРЅРѕ, РґРѕР»Р¶РЅРѕ РІРµСЂРЅСѓС‚СЊ false
                     for( size_t i = 0; i < testData.size(); ++i )
                     {
                         if( tree.remove( testData[i] ) )
